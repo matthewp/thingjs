@@ -9,7 +9,7 @@ Thing.create = function(proto, props, init) {
     props = undefined;
   }
 
-  if(typeof proto !== 'array')
+  if(!(proto instanceof Array))
     proto = [ proto ];
 
   var desc = {};
