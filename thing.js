@@ -30,8 +30,14 @@ Thing.create = function(proto, props, init) {
   }
   o = Object.create(base, desc);
 
-  if(init)
-    o = o.init();
+  if(init) {
+    var args = Array.prototype.slice.call(arguments),
+        pos = typeof props === 'undefined' ? 2 : 3;
+
+    args.slice(pos);
+
+    o.apply(o, args);
+  }
 
   return o;
 };
