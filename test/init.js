@@ -73,6 +73,24 @@ vows.describe('Initialization').addBatch({
       'has the second argument applied': function(topic) {
         assert.equal(topic.fee, 'fi');
       }
+    },
+
+    'a copy of an existing object': {
+      topic: function() {
+        var a = {
+          init: function() {
+            this.foo = 'bar';
+          }
+        };
+
+        var b = Thing.create(a, true);
+
+        return b;
+      },
+
+      'has the property set on init': function(topic) {
+        assert.equal(topic.foo, 'bar');
+      }
     }
   }
 
