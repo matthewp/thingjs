@@ -22,12 +22,17 @@ Thing.create = function(proto, props, init) {
     };
   }
 
-  var o, base;
-  while(proto.length > 0) {
+  var o, baseDesc = {}, base = proto.pop();
+  do {
     var par = proto.pop();
 
-    base = Object.create(par, base);
-  }
+   for(var p in base) {
+    baseDesc[p] = Object.getOwnPropertyDescriptor(base, p);
+   }
+
+   base = Object.create(par, baseDesc);
+  } while(proto.length > 0);
+
   o = Object.create(base, desc);
 
   if(init)
