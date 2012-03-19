@@ -24,13 +24,15 @@ Thing.create = function(proto, props, init) {
 
   var o, baseDesc = {}, base = proto.pop();
   do {
-   var par = proto.pop() || base;
+   var par = proto.pop();
 
-   for(var p in base) {
-    baseDesc[p] = Object.getOwnPropertyDescriptor(base, p);
+   if(par) {
+     for(var p in base) {
+      baseDesc[p] = Object.getOwnPropertyDescriptor(base, p);
+     }
+
+     base = Object.create(par, baseDesc);
    }
-
-   base = Object.create(par, baseDesc);
   } while(proto.length > 0);
 
   o = Object.create(base, desc);
