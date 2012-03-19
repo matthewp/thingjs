@@ -16,7 +16,7 @@ Thing.create = function(proto, props, init) {
   for(var p in props) {
     desc[p] = {
       value: props[p],
-      writeable: true,
+      writable: true,
       enumerable: true,
       configurable: true
     };

@@ -2,6 +2,8 @@ var vows = require('vows'),
     assert = require('assert'),
     Thing = require('../thing.js').Thing;
 
+debugger;
+
 vows.describe('Thing.create').addBatch({
 
   'with single inheritance': {
@@ -30,6 +32,26 @@ vows.describe('Thing.create').addBatch({
         var o = Thing.create(topic);
 
         assert.isTrue(typeof o.func === 'function');
+      },
+
+      'when properties are added': {
+        topic: function(base) {
+          var o = Thing.create(base, {
+            go: function() { }
+          });
+
+          return o;
+        },
+
+        'property exists on object': function(o) {
+          assert.isTrue(o.hasOwnProperty('go'));
+        },
+
+        'property is writable': function(o) {
+          var d = Object.getOwnPropertyDescriptor(o, 'go');
+
+          assert.isTrue(d.writable);
+        }
       }
     }
   }
