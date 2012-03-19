@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Thing | A tiny object that aids in creating other objects.</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+    }
+
+    body {
+      background: #FAF9F7;
+      color: #393738;
+      font-family: 'Verdana', sans-serif;
+      font-size: 17px;
+      font-style: normal;
+      font-weight: normal;
+      text-transform: normal;
+      letter-spacing: normal;
+    }
+
+    pre {
+      border: 1px dashed #393738;
+      padding: 2px;
+    }
+
+    header {
+      width: 100%;
+    }
+
+    header h1 {
+      font-weight: bold;
+      margin: auto;
+      text-align: center;
+      width: 100%;
+    }
+
+    header hr {
+      background: #DC441F;
+      color: #DC441F;
+      border: 0;
+      height: 5px;
+      width: 70%;
+    }
+
+    header p {
+      font-size: 11px;
+      text-align: center;
+      width: 100%;
+    }
+
+    article h2 {
+      font-size: 22px;
+      background: #E0E1D3;
+      padding-left: 1.5em;
+    }
+
+    article span, article pre, article p {
+      margin: 15px;
+    }
+
+    article ul {
+      margin: 0 4em 0 2em;
+      list-style-type: square;
+    }
+
+    article ul li span {
+      color: #393738;
+      line-height: 1.4em;
+    }
+
+    section {
+      margin-bottom: 2em;
+    }
+
+    footer {
+      background: #DC441F;
+      border-radius: 8px 8px 0 0;
+      height: 15px;
+    }
+
+    .syntax {
+      font-style: italic;
+    }
+
+    .project article:nth-child(2) pre {
+      background-color: black;
+      border: none;
+      color: #00FF00;
+      padding: 10px;
+    }
+
+    #exec {
+      position: absolute;
+      right: 15px;
+      font-size: 20px;
+    }
+ 
+    #fee {
+      font-weight: bolder;
+    }
+
+    .command {
+      margin: 20px;
+    }
+
+    .command ul, .command ul li, .command ul li span {
+      margin: 0;
+    }
+
+    .command .arg {
+      font-style: italic;
+    }
+  </style>
+</head>
+<body onload="prettyPrint()">
+  <a href="https://github.com/matthewp/thingjs"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
+  <header>
+    <h1>Thing.js</h1>
+    <p>A object that aids in creating objects.</p>
+    <hr/>
+  </header>
+  <section id="project" class="project">
+    <article>
+      <h2>About</h2>
+      <p>A tiny JavaScript snippet (~50 LOC) that aids in creating objects. It is a wrapper around the ES5 Object.create function. Thusly, ES5 is required (or a shim for <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object/create">Object.create</a> and <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor">Object.getOwnPropertyDescriptor</a>).</p>
+    <p>Thing.js is not opinionated; it's simply sugar for Object.create. It adds:</p>
+    <ul>
+      <li>Mixins.</li>
+      <li>Plain object for properties (not a descriptor object).</li>
+      <li>Object initialization (through an init function).</li>
+    </ul>
+    </article>
+    <article>
+      <h2>Get it</h2>
+      <pre>curl https://raw.github.com/matthewp/thingjs/master/thing.js > thing.js</pre>
+    </article>
+    <article>
+      <h2>Usage</h2>
+      <pre>
+    var a = {
+      fee: true
+    };
+
+    var b = {
+      fi: true
+    };
+
+    var c = Thing.create([ a, b ], {
+      init: function(fo, fum) {
+        this.fo = fo || false;
+        this.fum = fum || false;
+      },
+
+      whatsThatSmell: function() {
+        return 'I smell the blood of an Englishmen';
+      }
+    }, true, true, true);
+      </pre>
+    </article>
+    <article>
+      <h2>Syntax</h2>
+      <p class="syntax">Thing.create(proto(s), [ propertiesObject ], [ initialize ], [ initialization arguments ])</p>
+      <p class="argument">
+        <ul>
+        <li>proto(s): An object (or an array of objects) that are used as the prototype. If an array of objects, the first object in the array will be the prototype, the remaining will be used to create the mixin, in order of preference (in case of naming collisions).</li>
+        <li>[ propertiesObject ]: Optional. An object that contains properties to be included in the newly created object. Unlike Object.create, this is just an object, not a descriptor object. Properties on this object will be created as writable, enumerable, and configurable.</li>
+        <li>[ initialize ]: Optional. A boolean flag to determine whether the object should be initialized after created. If true, the init function (if it exists) will be called after the object is created.</li>
+        <li> [ initialization arguments ]: Optional. Splats, arguments to be included in the init function (if initialization argument is true).</li> 
+        </ul>
+      </p>
+    </article>
+    <article>
+      <h2>Source</h2>
+      <pre class="prettyprint">
+    var Thing = Object.create(null);
+    Thing.create = function(proto, props, init) {
+      if(typeof props === 'undefined'
+          && typeof init === 'undefined'
+          && typeof proto === 'object')
+        return Object.create(proto);
+      else if(typeof props === 'boolean') {
+        init = props;
+        props = undefined;
+      }
+
+      if(!(proto instanceof Array))
+        proto = [ proto ];
+
+      var desc = {};
+      for(var p in props) {
+        desc[p] = {
+          value: props[p],
+          writable: true,
+          enumerable: true,
+          configurable: true
+        };
+      }
+
+      var o, baseDesc = {}, base = proto.pop();
+      do {
+       var par = proto.pop();
+
+       if(par) {
+         for(var p in base) {
+          baseDesc[p] = Object.getOwnPropertyDescriptor(base, p);
+         }
+
+         base = Object.create(par, baseDesc);
+       }
+      } while(proto.length > 0);
+
+      o = Object.create(base, desc);
+
+      if(init) {
+        var args = Array.prototype.slice.call(arguments),
+            pos = typeof props === 'undefined' ? 2 : 3;
+
+        args = args.slice(pos);
+
+        o.init.apply(o, args);
+      }
+     
+      return o;
+    };
+      </pre>
+    </article>
+  </section>
+  <footer />
+</body>
+</html>
