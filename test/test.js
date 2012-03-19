@@ -18,6 +18,18 @@ vows.describe('Thing.create').addBatch({
 
         var doesInherit = topic.isPrototypeOf(o);
         assert.isTrue(doesInherit);
+      },
+
+      'has a property named func': function(topic) {
+        var o = Thing.create(topic);
+
+        assert.isTrue(typeof o.func !== 'undefined');
+      },
+
+      'has a function named func': function(topic) {
+        var o = Thing.create(topic);
+
+        assert.isTrue(typeof o.func === 'function');
       }
     }
   }
