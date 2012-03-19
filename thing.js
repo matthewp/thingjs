@@ -36,5 +36,5 @@ Thing.create = function(proto, props, init) {
   return o;
 };
 
-if(exports !== 'undefined')
+if(typeof exports !== 'undefined')
   exports.Thing = Thing;
