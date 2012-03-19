@@ -6,19 +6,20 @@ vows.describe('Thing.create').addBatch({
 
   'with single inheritance': {
     topic: function() {
-      var base = Object.create(null);
+      var base = {};
       base.func = function() { };
 
       return base;
     },
 
     'we get an object which': {
-      'is instance of base': function(topic) {
+      'is prototype of base': function(topic) {
         var o = Thing.create(topic);
 
-        assert.isTrue(o instanceof topic);
+        var doesInherit = topic.isPrototypeOf(o);
+        assert.isTrue(doesInherit);
       }
     }
   }
 
-});
+}).export(module);
