@@ -3,6 +3,7 @@
   "name": "thingjs",
   "description": "Thing is an object that aids in creating other objects.",
   "version": "0.0.1",
+  "main": "./thing.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/matthewp/thingjs.git"
