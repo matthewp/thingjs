@@ -41,6 +41,38 @@ vows.describe('Initialization').addBatch({
           assert.equal(topic.getWord(), 'bar');
         }
       }
+    },
+
+    'a thing with init args': {
+      topic: function() {
+        var a = {
+          init: function() {
+            this.word = 'foo';
+          },
+
+          getWord: function() {
+            return this.word;
+          }
+        };
+
+        var b = Thing.create(a, {
+          init: function(type, fee) { 
+            this.word = 'bar';
+            this.type = type;
+            this.fee = fee;
+          }
+        }, true, 'foo', 'fi');
+
+        return b;
+      },
+
+      'has the first argument applied': function(topic) {
+        assert.equal(topic.type, 'foo');
+      },
+
+      'has the second argument applied': function(topic) {
+        assert.equal(topic.fee, 'fi');
+      }
     }
   }
 
