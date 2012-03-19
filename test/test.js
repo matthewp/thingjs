@@ -51,6 +51,18 @@ vows.describe('Thing.create').addBatch({
           var d = Object.getOwnPropertyDescriptor(o, 'go');
 
           assert.isTrue(d.writable);
+        },
+
+        'property is enumerable': function(o) {
+          var d = Object.getOwnPropertyDescriptor(o, 'go');
+
+          assert.isTrue(d.enumerable);
+        },
+
+        'property is configurable': function(o) {
+          var d = Object.getOwnPropertyDescriptor(o, 'go');
+
+          assert.isTrue(d.configurable);
         }
       }
     }
