@@ -38,7 +38,7 @@ Thing.create = function(proto, props, init) {
   o = Object.create(base, desc);
 
   if(init)
-    o = o.init();
+    o.init();
 
   return o;
 };
