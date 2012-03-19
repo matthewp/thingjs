@@ -16,31 +16,32 @@ Thing.create = function(proto, props, init) {
   for(var p in props) {
     desc[p] = {
       value: props[p],
-      writeable: true,
+      writable: true,
       enumerable: true,
       configurable: true
     };
   }
 
-  var o, base;
-  while(proto.length > 0) {
-    var par = proto.pop();
+  var o, baseDesc = {}, base = proto.pop();
+  do {
+   var par = proto.pop();
 
-    base = Object.create(par, base);
-  }
+   if(par) {
+     for(var p in base) {
+      baseDesc[p] = Object.getOwnPropertyDescriptor(base, p);
+     }
+
+     base = Object.create(par, baseDesc);
+   }
+  } while(proto.length > 0);
+
   o = Object.create(base, desc);
 
-  if(init) {
-    var args = Array.prototype.slice.call(arguments),
-        pos = typeof props === 'undefined' ? 2 : 3;
-
-    args.slice(pos);
-
-    o.apply(o, args);
-  }
+  if(init)
+    o.init();
 
   return o;
 };
 
-if(exports !== 'undefined')
+if(typeof exports !== 'undefined')
   exports.Thing = Thing;
