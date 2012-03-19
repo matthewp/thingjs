@@ -50,4 +50,4 @@ Thing.create = function(proto, props, init) {
 };
 
 if(typeof exports !== 'undefined')
-  exports.Thing = Thing;
+  exports.create = Thing.create;

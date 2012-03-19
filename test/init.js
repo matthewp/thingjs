@@ -1,6 +1,6 @@
 var vows = require('vows'),
     assert = require('assert'),
-    Thing = require('../thing.js').Thing;
+    Thing = require('../thing.js');
 
 debugger;
 
