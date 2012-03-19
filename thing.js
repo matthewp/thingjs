@@ -24,7 +24,7 @@ Thing.create = function(proto, props, init) {
 
   var o, baseDesc = {}, base = proto.pop();
   do {
-   var par = proto.pop();
+   var par = proto.pop() || base;
 
    for(var p in base) {
     baseDesc[p] = Object.getOwnPropertyDescriptor(base, p);

@@ -4,7 +4,7 @@ var vows = require('vows'),
 
 debugger;
 
-vows.describe('Thing.create').addBatch({
+vows.describe('Single inheritance').addBatch({
 
   'with single inheritance': {
     topic: function() {
