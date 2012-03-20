@@ -112,6 +112,13 @@
     .command .arg {
       font-style: italic;
     }
+    
+    .get-or {
+      font-weight: bolder;
+      font-style: italic;
+      width: 100%;
+      text-align: center;
+    }
   </style>
 </head>
 <body onload="prettyPrint()">
@@ -135,10 +142,14 @@
     <article>
       <h2>Get it</h2>
       <pre>curl https://raw.github.com/matthewp/thingjs/master/thing.js > thing.js</pre>
+      <h4 class="get-or" style="">OR</h4>
+      <pre>npm install thingjs</pre>
     </article>
     <article>
       <h2>Usage</h2>
       <pre>
+    var Thing = require('thingjs');
+
     var a = {
       fee: true
     };
@@ -156,9 +167,12 @@
       whatsThatSmell: function() {
         return 'I smell the blood of an Englishmen';
       }
-    }, true, true, true);
+    });
 
-    var d = Thing.create(c, true);
+    var d = Thing.create(c, true, true, true);
+
+    if(d.fee && d.fi && d.fo && d.fum)
+      alert(d.whatsThatSmell());
       </pre>
     </article>
     <article>
