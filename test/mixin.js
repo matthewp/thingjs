@@ -52,6 +52,44 @@ vows.describe('Mixins').addBatch({
         assert.isTrue(hasProp);
       }
     }
+  },
+
+  'with two levels of inheritance': {
+    topic: function() {
+      var a = {
+        someFunc: function() { }
+      };
+
+      var b = {
+        thisFunc: function() { }
+      }
+
+      var c = Thing.create(a, {
+        myFunc: function() { }
+      });
+
+      var d = Thing.create([ b, c ]);
+
+      return d;
+    },
+
+    'we get an object with the first func': function(topic) {
+      var hasA = typeof topic.someFunc === 'function';
+
+      assert.isTrue(hasA);
+    },
+
+    'we get an object with the second func': function(topic) {
+      var hasB = typeof topic.thisFunc === 'function';
+
+      assert.isTrue(hasB);
+    },
+
+    'we get an object with the third func': function(topic) {
+      var hasC = typeof topic.myFunc === 'function';
+
+      assert.isTrue(hasC);
+    }
   }
 
 }).export(module);

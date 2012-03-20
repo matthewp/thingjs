@@ -2,7 +2,7 @@ var Thing = Object.create(null);
 Thing.create = function(proto, props, init) {
   if(typeof props === 'undefined'
       && typeof init === 'undefined'
-      && typeof proto === 'object')
+      && !(proto instanceof Array))
     return Object.create(proto);
   else if(typeof props === 'boolean') {
     init = props;
@@ -27,8 +27,11 @@ Thing.create = function(proto, props, init) {
    var par = proto.pop();
 
    if(par) {
+     var all = {};
      for(var p in base) {
-      baseDesc[p] = Object.getOwnPropertyDescriptor(base, p);
+      all[p] = base[p];
+
+      baseDesc[p] = Object.getOwnPropertyDescriptor(all, p);
      }
 
      base = Object.create(par, baseDesc);
