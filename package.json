@@ -2,7 +2,7 @@
   "author": "Matthew Phillips <matthew@phillipsoft.biz> (http://www.matthewphillips.info)",
   "name": "thingjs",
   "description": "Thing is an object that aids in creating other objects.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "./thing.js",
   "repository": {
     "type": "git",
