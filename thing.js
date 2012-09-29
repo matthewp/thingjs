@@ -1,5 +1,6 @@
 var Thing = Object.create(null);
-Thing.create = function(proto, props, init) {
+Thing.create = function(proto, props, initialize) {
+  var init;
   if(typeof props === 'undefined'
       && typeof init === 'undefined'
       && !(proto instanceof Array))
@@ -7,6 +8,8 @@ Thing.create = function(proto, props, init) {
   else if(typeof props === 'boolean') {
     init = props;
     props = undefined;
+  } else {
+    init = initialize;
   }
 
   if(!(proto instanceof Array))
